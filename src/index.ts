@@ -106,7 +106,7 @@ app.post("/user/login", async (req, res) => {
     if (user && user.password === password) {
       console.log("Login successful");
       const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
-        expiresIn: "1h",
+        expiresIn: "24h",
       });
       res.json({
         message: "Login successful",
