@@ -14,15 +14,16 @@ datasource db {
 }
 
 model Therapist {
-  id         String     @id @default(cuid())
-  name       String
-  email      String
-  password   String
-  speciality String?
-  experience String?
-  languages  Language[]
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
+  id               String             @id @default(cuid())
+  name             String
+  email            String
+  password         String
+  speciality       String?
+  experience       String?
+  languages        Language[] 
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  AppointmentTimes AppointmentTimes[]
 }
 
 model Language {
@@ -40,4 +41,24 @@ model User {
   phoneNumber BigInt
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model AppointmentTimes {
+  id          String        @id @default(cuid())
+  date        DateAndTime[]
+  userId      String
+  therapist   Therapist     @relation(fields: [therapistId], references: [id])
+  therapistId String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model DateAndTime {
+  id            String           @id @default(cuid())
+  date          DateTime
+  time          String
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  Appointment   AppointmentTimes @relation(fields: [appointmentId], references: [id])
+  appointmentId String
 }
