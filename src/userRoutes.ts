@@ -5,6 +5,8 @@ const prisma = new PrismaClient();
 
 const router = express.Router();
 
+
+//get all users
 router.get("/users", async (req, res) => {
   try {
     const users = await prisma.therapist.findMany({});
@@ -14,6 +16,8 @@ router.get("/users", async (req, res) => {
   }
 });
 
+
+//specific user data
 router.get("/user", async (req, res) => {
   try {
     const id = req.query.id;
@@ -28,6 +32,7 @@ router.get("/user", async (req, res) => {
   }
 });
 
+//create user
 router.post("/user", async (req, res) => {
   const name = req.body.name;
   const password = req.body.password;
@@ -93,6 +98,7 @@ router.post("/user", async (req, res) => {
 
 const JWT_SECRET = process.env.JWT_SECRET || "secret";
 
+//user login
 router.post("/user/login", async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
