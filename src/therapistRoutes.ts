@@ -1,6 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import router from "./server";
+import { Router } from "express";
 const prisma = new PrismaClient();
+const router = Router();
+
+
 router.post("/therapist/appointments", (req, res) => {
     const dates = [
       "2022-03-15T09:24:38.123Z",
