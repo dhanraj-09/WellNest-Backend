@@ -11,41 +11,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
-// const data = {
-//     email : "rushilmisra@gmail.com",
-//     password :"hin",
-//     fullname : "mohit",
-//     phoneNumber : 999999999,
-// }
-const data = {
-    email: "therapist@gmail.com",
-    password: "asdf",
-    fullname: "thera pist",
-    phoneNumber: 99999123,
-};
-const addData = () => __awaiter(void 0, void 0, void 0, function* () {
+const mockTherapists = [
+    {
+        email: "yashsthapliyal05@gmail.com",
+        password: "afsdl;jfas;23",
+        name: "Yash Sanjeev Thapliyal",
+        phoneNumber: 8130411584,
+        languages: ["English", "French", "Hindi", "Haryanvi"],
+    },
+];
+const seedTherapists = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield prisma.therapist.create({
-            data: {
-                email: data.email,
-                password: data.password,
-                name: data.fullname,
-                languages: {
-                    create: [
-                        {
-                            name: "Hindi",
-                        },
-                        {
-                            name: "English",
-                        },
-                    ],
+        for (const therapist of mockTherapists) {
+            yield prisma.therapist.create({
+                data: {
+                    email: therapist.email,
+                    password: therapist.password,
+                    name: therapist.name,
+                    languages: {
+                        create: therapist.languages.map((lang) => ({ name: lang })),
+                    },
                 },
-            },
-        });
-        return user;
+            });
+        }
+        console.log("Mock therapist data added successfully.");
     }
     catch (error) {
-        console.log(error);
+        console.error("Error adding mock therapists:", error);
+    }
+    finally {
+        yield prisma.$disconnect();
     }
 });
-addData();
+seedTherapists();

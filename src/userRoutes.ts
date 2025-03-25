@@ -6,15 +6,6 @@ const prisma = new PrismaClient();
 const router = express.Router();
 
 
-//get all users
-router.get("/users", async (req, res) => {
-  try {
-    const users = await prisma.therapist.findMany({});
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ error: "Error fetching users" });
-  }
-});
 
 
 //specific user data
@@ -156,7 +147,7 @@ router.get("/alltherapists",async(req,res)=>{
     const therapists = await prisma.therapist.findMany({
       
       include : {
-      languages: true  
+      languages: true,
       },
       
     });

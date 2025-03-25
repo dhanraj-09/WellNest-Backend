@@ -1,42 +1,38 @@
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
-// const data = {
-//     email : "rushilmisra@gmail.com",
-//     password :"hin",
-//     fullname : "mohit",
-//     phoneNumber : 999999999,
-// }
-const data = {
-  email: "therapist@gmail.com",
-  password: "asdf",
-  fullname: "thera pist",
-  phoneNumber: 99999123,
-};
+const mockTherapists = [
+  {
+    email: "yashsthapliyal05@gmail.com",
+    password: "afsdl;jfas;23",
+    name: "Yash Sanjeev Thapliyal",
+    phoneNumber: 8130411584,
+    languages: ["English", "French", "Hindi","Haryanvi"],
+  },
+  
+];
 
-const addData = async () => {
+const seedTherapists = async () => {
   try {
-    const user = await prisma.therapist.create({
-      data: {
-        email: data.email,
-        password: data.password,
-        name: data.fullname,
-        languages: {
-          create: [
-            {
-              name: "Hindi",
-            },
-            {
-              name: "English",
-            },
-          ],
+    for (const therapist of mockTherapists) {
+      await prisma.therapist.create({
+        data: {
+          email: therapist.email,
+          password: therapist.password,
+          name: therapist.name,
+          languages: {
+            create: therapist.languages.map((lang) => ({ name: lang })),
+          },
         },
-      },
-    });
-    return user;
+      });
+    }
+    console.log("Mock therapist data added successfully.");
   } catch (error) {
-    console.log(error);
+    console.error("Error adding mock therapists:", error);
+  } finally {
+    await prisma.$disconnect();
   }
 };
 
-addData();
+seedTherapists();

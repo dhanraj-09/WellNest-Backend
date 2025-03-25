@@ -1,5 +1,6 @@
+import { PrismaClient } from "@prisma/client";
 import router from "./server";
-
+const prisma = new PrismaClient();
 router.post("/therapist/appointments", (req, res) => {
     const dates = [
       "2022-03-15T09:24:38.123Z",
@@ -36,6 +37,22 @@ router.post("/therapist/appointments", (req, res) => {
       res.json({ message: "Error" });
     }
   });
+//get all therapists users
+router.get("/therapists",async(req,res)=>{
+  try{
+    const therapists = await prisma.therapist.findMany({
+      
+      include : {
+      languages: true  
+      },
+      
+    });
+    
+    res.json(therapists);
+  }catch(err){
+    console.log(err);
+  }
+})
 
 
   export default router;

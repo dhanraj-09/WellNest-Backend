@@ -17,15 +17,7 @@ const client_1 = require("@prisma/client");
 const jwt = require("jsonwebtoken");
 const prisma = new client_1.PrismaClient();
 const router = express_1.default.Router();
-router.get("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const users = yield prisma.therapist.findMany({});
-        res.json(users);
-    }
-    catch (error) {
-        res.status(500).json({ error: "Error fetching users" });
-    }
-}));
+//specific user data
 router.get("/user", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = req.query.id;
@@ -40,6 +32,7 @@ router.get("/user", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(500).json({ error: "Error fetching user" });
     }
 }));
+//create user
 router.post("/user", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const name = req.body.name;
     const password = req.body.password;
@@ -105,6 +98,7 @@ router.post("/user", (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 }));
 const JWT_SECRET = process.env.JWT_SECRET || "secret";
+//user login
 router.post("/user/login", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const email = req.body.email;
     const password = req.body.password;
@@ -158,7 +152,7 @@ router.get("/alltherapists", (req, res) => __awaiter(void 0, void 0, void 0, fun
     try {
         const therapists = yield prisma.therapist.findMany({
             include: {
-                languages: true
+                languages: true,
             },
         });
         res.json(therapists);
