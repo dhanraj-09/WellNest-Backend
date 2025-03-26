@@ -30,7 +30,7 @@ router.get("/user", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 }));
 //create user
-router.post("/user", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const name = req.body.name;
     const password = req.body.password;
     const email = req.body.email;

@@ -29,6 +29,7 @@ router.post("/", async (req, res) => {
   const password = req.body.password;
   const email = req.body.email;
   const phoneNumber = req.body.phoneNumber;
+  const picture = req.body.picture;
 
   try {
     const user = await prisma.user.findFirst({
@@ -51,6 +52,7 @@ router.post("/", async (req, res) => {
             email: email.toLowerCase(),
             phoneNumber,
             password,
+            picture
           },
         });
         if (user) {
