@@ -35,6 +35,7 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const password = req.body.password;
     const email = req.body.email;
     const phoneNumber = req.body.phoneNumber;
+    const picture = req.body.picture;
     try {
         const user = yield prisma.user.findFirst({
             where: {
@@ -56,6 +57,7 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                         email: email.toLowerCase(),
                         phoneNumber,
                         password,
+                        picture
                     },
                 });
                 if (user) {
