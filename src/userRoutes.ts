@@ -24,7 +24,7 @@ router.get("/user", async (req, res) => {
 });
 
 //create user
-router.post("/user", async (req, res) => {
+router.post("/", async (req, res) => {
   const name = req.body.name;
   const password = req.body.password;
   const email = req.body.email;

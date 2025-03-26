@@ -8,14 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_1 = require("@prisma/client");
-const server_1 = __importDefault(require("./server"));
+const express_1 = require("express");
 const prisma = new client_1.PrismaClient();
-server_1.default.post("/therapist/appointments", (req, res) => {
+const router = (0, express_1.Router)();
+router.post("/therapist/appointments", (req, res) => {
     const dates = [
         "2022-03-15T09:24:38.123Z",
         "2023-07-21T14:57:12.789Z",
@@ -53,7 +51,7 @@ server_1.default.post("/therapist/appointments", (req, res) => {
     }
 });
 //get all therapists users
-server_1.default.get("/therapists", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/therapists", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const therapists = yield prisma.therapist.findMany({
             include: {
@@ -66,4 +64,4 @@ server_1.default.get("/therapists", (req, res) => __awaiter(void 0, void 0, void
         console.log(err);
     }
 }));
-exports.default = server_1.default;
+exports.default = router;
